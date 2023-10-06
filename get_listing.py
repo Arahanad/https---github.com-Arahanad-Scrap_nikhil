@@ -43,21 +43,21 @@ class franchisegrade():
         }
 
     def get_listing(self):
-        for i in range(88):
+        for i in range(13):
             print("pages==========>",i)
             params = {
                 'page': str(i),
                 'results': '36',
             }
-            response = requests.get("https://www.franchisegrade.com/search?page=1&results=36",headers=self.headers,cookies=self.cookies,params=params)
+            response = requests.get("https://www.franchisegrade.com/search?page=1&results=36&sector=3",headers=self.headers,cookies=self.cookies,params=params)
             soup = BeautifulSoup(response.content,'lxml')
             for i in soup.find_all('a',{'class':'listing-tile '}):
                 self.listing.append(self.helper.get_url_from_tag(i))
-            print(len(self.listing))
+            print(len(list(set(self.listing))))
             with open ('Output\listing.json','w') as json_file:
                 json.dump(self.listing,json_file,indent=4)
 
-    def json_in_output():
+    def json_in_output(self):
         data = []
         x = os.listdir("Output")
         print(len(x))
@@ -74,6 +74,6 @@ class franchisegrade():
 
 if __name__ == "__main__":
     object = franchisegrade()
-    object.get_listing
+    object.get_listing()
     object.json_in_output()
 
